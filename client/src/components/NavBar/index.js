@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-// grid system
+import React from 'react';
+// import Link from react-router-dom
 import {
   AppBar,
   Toolbar,
@@ -18,8 +16,10 @@ import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 
-// import components
-import Dashboard from '../Dashboard';
+// import signout button
+const location = () => window.location.pathname === '/'
+  ? 'Dashboard'
+  : window.location.pathname.split('/').reverse().join(' ');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,9 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function NavBar({ user }) {
 
-
-function App() {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorE1, setAnchorE1] = React.useState(null);
@@ -60,40 +59,36 @@ function App() {
           <FormControlLabel
             control={<ToggleSwitch checked={auth} onChange={handleChange} aria-label='login switch' />}
             label={auth ? 'Logout' : 'Login'}
-            />
-      </FormGroup>
-      <AppBar position='static'>
-        <Toolbar>
-          <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' className={classes.title}>
-            Lists
+          />
+        </FormGroup>
+        <AppBar position='static'>
+          <Toolbar>
+            <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant='h6' className={classes.title}>
+              Lists
           </Typography>
-          
-          {auth && (
-            <div>
-              <IconButton
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleMenu}
-              color='inherit'
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-          )}
 
-        </Toolbar>
-      </AppBar>
-    </div>
-        <Switch>
-          <div>hello world</div>
-          {/* < Route path='/' component={Dashboard} /> */}
-        </Switch>
-  </>
+            {auth && (
+              <div>
+                <IconButton
+                  aria-label='account of current user'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
+                  onClick={handleMenu}
+                  color='inherit'
+                >
+                  <AccountCircle />
+                </IconButton>
+              </div>
+            )}
+
+          </Toolbar>
+        </AppBar>
+      </div>
+    </>
   )
-}
+};
 
-export default App;
+export default NavBar();
