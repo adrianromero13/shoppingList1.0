@@ -1,5 +1,5 @@
 const express = require('express');
-const monggose = require('mongoose');
+const mongoose = require('mongoose');
 const routes = require('./routes');
 
 const PORT = process.env.PORT || 4001;
@@ -15,9 +15,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(routes);
-// require('./services/passport');
+require('./services/passport');
 // Connect database
-monggose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shoppinglis-react',
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shoppinglis-react',
   {
     useNewUrlParser: true,
     useCreateIndex: true,
