@@ -13,29 +13,32 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
-import NavButtons from '../NavBarButtons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
+    
   },
   title: {
     flexGrow: 1,
   },
 }));
 
-export default function NavBar() {
+export default function NavBar({user}) {
+
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [value, setValue] = React.useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  }
   const open = Boolean(anchorEl);
 
-  const handleChange = (event) => {
+  const handleAuthChange = (event) => {
     setAuth(event.target.checked);
   };
 
@@ -49,14 +52,6 @@ export default function NavBar() {
 
   return (
     <div className={classes.root}>
-      <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={auth} 
-          onChange={handleChange} 
-          aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
       <AppBar position="static">
         <Toolbar>
           <IconButton 
@@ -68,8 +63,8 @@ export default function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            
-            <NavButtons />
+            Title of List Type
+            {/* <NavButtons value={value} handleChange={handleTabChange}/> */}
 
           </Typography>
           {auth && (
