@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Button, Input as InputField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 
 /**
@@ -10,34 +10,41 @@ import { TextField, Button, Input as InputField } from '@material-ui/core';
  * 
  */
 
-export function Form({
-  defaultValues,
-  children,
-  onSubmit,
-  className,
-}) {
-  const methods = useForm({ defaultValues });
-  const { handleSubmit } = methods;
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className={className}>
-      {React.Children.map(children, child => {
-        return child.props.name
-          ? React.createElement(child.type, {
-            ...{
-              ...child.props,
-              register: methods.register,
-              key: child.props.name
-            }
-          })
-          : child;
-      })}
-    </form>
-  )
-}
+ // couldn't get this to work
+// export function Form({
+//   defaultValue,
+//   // values,
+//   children,
+//   onSubmit,
+//   className,
+// }) {
+//   // const methods = useForm({ defaultValue });
+//   const methods = useForm();
+//   const { handleSubmit, register } = methods;
+  
+//   return (
+//     <form 
+//     onSubmit={handleSubmit(onSubmit)} 
+//     className={className}
+//     noValidate
+//     >
+//       {React.Children.map(children, child => {
+//         return child.props.name
+//           ? React.createElement(child.type, {
+//             ...{
+//               ...child.props,
+//               register: methods.register,
+//               key: child.props.name
+//             }
+//           })
+//           : child;
+//       })}
+//     </form>
+//   )
+// }
 
 export function Input({
-  register,
+  inputRef,
   name,
   control,
   defaultValue,
@@ -51,13 +58,15 @@ export function Input({
       name={name}
       control={control}
       defaultValue={defaultValue}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({ field: { onChange, value, ref }, fieldState: { error } }) => (
         <TextField
+          inputRef={inputRef}
+          // {...rest}
           label={label}
           type={type}
           variant='filled'
           value={value}
-          onChange={onChange}
+          onChange={value => onChange(value)}
           error={!!error}
           helperText={error ? error.message : null}
         />
