@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 
 // import components
 
 import NavBar from '../../components/NavBar';
+import Signup from '../Signup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,23 +25,21 @@ const App = () => {
 
   return (
     <div className={classes.root}>
-      <Grid 
-      // container 
-      // direction='column'
-      // justifyContent='center'
-      // alignItems='center'
-      // wrap='nowrap' 
-      // spacing={0}
-      className={classes.display}
+      <Grid
+        // container 
+        // direction='column'
+        // justifyContent='center'
+        // alignItems='center'
+        // wrap='nowrap' 
+        // spacing={0}
+        className={classes.display}
       >
         <Grid item xs={12}>
-
-        <NavBar />
-  
+          <NavBar />
         </Grid>
         <Switch>
           {/* Routed components  */}
-
+          <Route exact path='/signup' component={Signup} />
         </Switch>
       </Grid>
     </div>
