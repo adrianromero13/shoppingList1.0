@@ -14,7 +14,12 @@ function tokenForUser(user) {
 module.exports = {
   // signup event
   signUp: async (req, res) => {
-    const { email, password } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+    } = req.body;
     // handle case in which email and/or password not found in req
     if (!email || !password) {
       return res.status(422).json({ error: 'You must provide email and password' });
@@ -33,7 +38,12 @@ module.exports = {
       const existingUser = await User.findOne({ email });
       if (existingUser) { return res.status(403).json({ error: 'User already exists' }); }
       // if user doesn't exist yet, then send info to USER model to create new user
-      const user = await new User({ email, password }).save();
+      const user = await new User({
+        firstName,
+        lastName,
+        email,
+        password,
+      }).save();
       return res.json({ token: tokenForUser(user) });
     } catch (e) {
       return res.status(403).json({ e });

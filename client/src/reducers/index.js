@@ -4,9 +4,11 @@ import { ADD_TODO } from '../actions/types';
 
 // import reducers
 import authReducer from './authReducer';
+import userReducer from './userReducer';
 
 export default combineReducers({
   auth: authReducer,
+  currentUser: userReducer,
   form: formReducer.plugin({
     'addTodo': (state, action) => {
       switch (action.type) {
