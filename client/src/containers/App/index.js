@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
@@ -7,7 +7,9 @@ import { Grid } from '@material-ui/core';
 // import components
 
 import NavBar from '../../components/NavBar';
+import Home from '../Home';
 import Signup from '../Signup';
+import Signin from '../Signin';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +41,9 @@ const App = () => {
         </Grid>
         <Switch>
           {/* Routed components  */}
+          <Route exact path='/' component={Home} />
           <Route exact path='/signup' component={Signup} />
+          <Route exact path='/signin' component={Signin} />
         </Switch>
       </Grid>
     </div>
