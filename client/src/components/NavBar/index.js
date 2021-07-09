@@ -32,6 +32,7 @@ export default function NavBar({user}) {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = React.useState(0);
+  console.log('user in navbar', user);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
