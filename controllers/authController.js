@@ -50,5 +50,8 @@ module.exports = {
     }
   },
   // sign in method
-  signIn: (req, res) => res.json({ token: tokenForUser(req.user) }),
+  signIn: (req, res) => res.json({
+    token: tokenForUser(req.user),
+    // user: req.user,
+  }),
 };
