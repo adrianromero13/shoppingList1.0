@@ -4,7 +4,7 @@ import { AUTH_USER, AUTH_USER_ERROR } from '../actions/types';
 const INITIAL_STATE = {
   authenticated: '',
   authError: '',
-  user: [],
+  // user: [],
 };
 
 export default function (state = INITIAL_STATE, action) {

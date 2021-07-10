@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import Switch from '@material-ui/core/Switch';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -32,6 +33,8 @@ export default function NavBar({user}) {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = React.useState(0);
+
+  const history = useHistory();
   console.log('user in navbar', user);
 
   const handleTabChange = (event, newValue) => {
@@ -48,6 +51,11 @@ export default function NavBar({user}) {
   };
 
   const handleClose = () => {
+    // if(selected === 'signup') {
+    //   history.push('/signup');
+    // } else if (selected === 'signout') {
+    //   history.push('/signout');
+    // }
     setAnchorEl(null);
   };
 
@@ -70,6 +78,7 @@ export default function NavBar({user}) {
           </Typography>
           {auth && (
             <div>
+              {user?.firstName !== undefined && user ? `Hello ${user?.firstName} ${user?.lastName}` : 'Welcome To ShoppersList' }
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -94,8 +103,8 @@ export default function NavBar({user}) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => history.push('/') && handleClose}>Home</MenuItem>
+                <MenuItem onClick={() => history.push('/signout') && handleClose}>Signout</MenuItem>
               </Menu>
             </div>
           )}

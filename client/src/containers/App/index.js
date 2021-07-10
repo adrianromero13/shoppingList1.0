@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,29 +28,48 @@ const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [user, setUser ] = useState();
   const currentUser = useSelector(state => state.currentUser.getUserData);
-
   useEffect(() => {
-    if (currentUser.length === 0) {
-      dispatch(getCurrentUser())
-    } else return () => {
+    console.log('in useEffect', currentUser);
+    if(!user || user?.firstName === undefined) {
+      dispatch(getCurrentUser()) && setUser(currentUser);
+    }
+    return () => {
       //
     }
-  }, [currentUser]);
+  }, [currentUser, user])
+// dispatch(getCurrentUser());
+  // const mounted = useRef();
+
+
+  // useEffect(() => {
+  //   if(!mounted.current) {
+  //     dispatch(getCurrentUser());
+  //     setUser(currentUser);
+  //     mounted.current = true;
+  //   } else {
+  //     if(user !== undefined) {
+  //       dispatch(getCurrentUser());
+  //       setUser(currentUser);
+  //     }
+  //   }
+  // }, [currentUser, dispatch, user])
+  // useEffect(() => {
+   
+  //   dispatch(getCurrentUser());
+  //   setUser(currentUser);
+  //   return () => {
+  //     //
+  //   }
+  // }, [currentUser, dispatch]);
 
   return (
     <div className={classes.root}>
-      <Grid
-        // container 
-        // direction='column'
-        // justifyContent='center'
-        // alignItems='center'
-        // wrap='nowrap' 
-        // spacing={0}
-        className={classes.display}
-      >
+      {console.log('user in home', user)}
+      <Grid className={classes.display}>
         <Grid item xs={12}>
-          <NavBar user={currentUser}/>
+          <NavBar user={user}/>
         </Grid>
         <Switch>
           {/* Routed components  */}
