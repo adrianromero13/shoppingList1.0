@@ -29,10 +29,14 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  todos: [{
+  lists: [{
     type: Schema.Types.ObjectId,
-    ref: 'Todo',
+    ref: 'List',
   }],
+  // todos: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Todo',
+  // }],
 });
 
 // handling password

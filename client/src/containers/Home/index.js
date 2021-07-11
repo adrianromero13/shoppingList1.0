@@ -94,15 +94,16 @@ const Home = () => {
           <Tab label='Item Six' {...a11yProps(5)} />
           <Tab label='Item Seven' {...a11yProps(6)} />
         </Tabs>
-        <TabPanel value={value} index={0}>{value}</TabPanel>
-        <TabPanel value={value} index={1}>{value}</TabPanel>
-        <TabPanel value={value} index={2}>{value}</TabPanel>
-        <TabPanel value={value} index={3}>{value}</TabPanel>
-        <TabPanel value={value} index={4}>{value}</TabPanel>
-        <TabPanel value={value} index={5}>{value}</TabPanel>
-        <TabPanel value={value} index={6}>{value}</TabPanel>
+        <TabPanel value={value} index={0}>{value + 1}</TabPanel>
+        <TabPanel value={value} index={1}>{value + 1}</TabPanel>
+        <TabPanel value={value} index={2}>{value + 1}</TabPanel>
+        <TabPanel value={value} index={3}>{value + 1}</TabPanel>
+        <TabPanel value={value} index={4}>{value + 1}</TabPanel>
+        <TabPanel value={value} index={5}>{value + 1}</TabPanel>
+        <TabPanel value={value} index={6}>{value + 1}</TabPanel>
         <Tooltip title='Add' aria-label='add'>
           <Fab color='primary' placement='bottom-end' className={classes.absolute}>
+            {/* <Fab color='primary' placement='bottom-end'> */}
             <AddIcon />
           </Fab>
         </Tooltip>
