@@ -8,7 +8,10 @@ import {
   Tab,
   Typography,
   Box,
+  Tooltip,
+  Fab,
 } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles';
 
 function TabPanel(props) {
@@ -51,6 +54,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: '65vh',
+    width: '100%',
+    position: 'relative',
+  },
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(3),
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -59,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
-  const [value, setValue ] = useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -69,12 +79,12 @@ const Home = () => {
     <>
       <div className={classes.root}>
         <Tabs
-        orientation='vertical'
-        variant='scrollable'
-        value={value}
-        onChange={handleChange}
-        aria-label='Vertical tabs example'
-        className={classes.tabs}
+          orientation='vertical'
+          variant='scrollable'
+          value={value}
+          onChange={handleChange}
+          aria-label='Vertical tabs example'
+          className={classes.tabs}
         >
           <Tab label='Item One' {...a11yProps(0)} />
           <Tab label='Item Two' {...a11yProps(1)} />
@@ -91,6 +101,11 @@ const Home = () => {
         <TabPanel value={value} index={4}>{value}</TabPanel>
         <TabPanel value={value} index={5}>{value}</TabPanel>
         <TabPanel value={value} index={6}>{value}</TabPanel>
+        <Tooltip title='Add' aria-label='add'>
+          <Fab color='primary' placement='bottom-end' className={classes.absolute}>
+            <AddIcon />
+          </Fab>
+        </Tooltip>
       </div>
       <div>Tell me now!</div>
     </>
