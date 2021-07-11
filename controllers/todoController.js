@@ -1,7 +1,7 @@
 const { Todo } = require('../models');
 
 module.exports = {
-  // fetches todos (items for grocery list)
+  // fetches list items for List
   getTodos: async (req, res) => {
     try {
       const todos = await Todo.find();
