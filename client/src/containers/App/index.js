@@ -31,7 +31,6 @@ const App = () => {
   const [user, setUser ] = useState();
   const currentUser = useSelector(state => state.currentUser.getUserData);
   useEffect(() => {
-    console.log('in useEffect', currentUser);
     if(!user || user?.firstName === undefined) {
       dispatch(getCurrentUser()) && setUser(currentUser);
     }
@@ -66,7 +65,6 @@ const App = () => {
 
   return (
     <div className={classes.root}>
-      {console.log('user in home', user)}
       <Grid className={classes.display}>
         <Grid item xs={12}>
           <NavBar user={user}/>

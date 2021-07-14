@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { compose } from 'redux';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles';
+
+import { getUserLists } from '../../actions/todos';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   absolute: {
     position: 'absolute',
     bottom: theme.spacing(2),
-    right: theme.spacing(3),
+    right: theme.spacing(1),
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -70,14 +72,38 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [lists, setLists] = useState({});
+
+  const userLists = useSelector(state => state.lists.getLists);
+  const dispatch = useDispatch();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  useEffect(() => {
+    const fetLists = async () => {
+      setLists(await dispatch(getUserLists()));
+    }
+
+    fetLists();
+  }, [lists]);
+  // useEffect(() => {
+  //   if (!lists || lists.length === 0) {
+  //     dispatch(getUserLists());
+  //   }
+  //   setLists(userLists);
+  //   return () => {
+  //     // 
+  //   }
+  // }, [userLists, lists]);
+
   return (
     <>
       <div className={classes.root}>
+        {/* {lists?.map(({title, _id, index}) => {
+          return <div key={_id}>{title}{index}</div>
+        })} */}
         <Tabs
           orientation='vertical'
           variant='scrollable'
@@ -86,6 +112,7 @@ const Home = () => {
           aria-label='Vertical tabs example'
           className={classes.tabs}
         >
+         
           <Tab label='Item One' {...a11yProps(0)} />
           <Tab label='Item Two' {...a11yProps(1)} />
           <Tab label='Item Three' {...a11yProps(2)} />
@@ -93,14 +120,9 @@ const Home = () => {
           <Tab label='Item Five' {...a11yProps(4)} />
           <Tab label='Item Six' {...a11yProps(5)} />
           <Tab label='Item Seven' {...a11yProps(6)} />
+          <Tab className={classes.absolute} label='Add' />
         </Tabs>
         <TabPanel value={value} index={0}>{value + 1}</TabPanel>
-        <TabPanel value={value} index={1}>{value + 1}</TabPanel>
-        <TabPanel value={value} index={2}>{value + 1}</TabPanel>
-        <TabPanel value={value} index={3}>{value + 1}</TabPanel>
-        <TabPanel value={value} index={4}>{value + 1}</TabPanel>
-        <TabPanel value={value} index={5}>{value + 1}</TabPanel>
-        <TabPanel value={value} index={6}>{value + 1}</TabPanel>
         <Tooltip title='Add' aria-label='add'>
           <Fab color='primary' placement='bottom-end' className={classes.absolute}>
             {/* <Fab color='primary' placement='bottom-end'> */}
@@ -108,7 +130,6 @@ const Home = () => {
           </Fab>
         </Tooltip>
       </div>
-      <div>Tell me now!</div>
     </>
   )
 };
