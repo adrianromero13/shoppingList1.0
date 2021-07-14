@@ -3,7 +3,9 @@ const { User, List, Todo } = require('../models');
 module.exports = {
   getCurrentUser: async (req, res) => {
     try {
-      const getUserData = await User.findById(req.user._id).select('-password');
+      const getUserData = await User.findById(req.user._id)
+        .select('-password')
+        .populate('lists');
       return res.status(200).json(getUserData);
     } catch (e) {
       return res.status(403).json({ e });
@@ -20,6 +22,15 @@ module.exports = {
       req.user.lists.push(newList);
       await req.user.save();
       return res.status(200).json(newList);
+    } catch (e) {
+      return res.status(403).json({ e });
+    }
+  },
+
+  getLists: async (req, res) => {
+    try {
+      const lists = await List.find({ user: req.user._id }).populate('todos');
+      return res.status(200).json(lists);
     } catch (e) {
       return res.status(403).json({ e });
     }
