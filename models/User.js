@@ -30,7 +30,7 @@ const UserSchema = new Schema({
     default: Date.now(),
   },
   lists: [{
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: 'List',
   }],
   // todos: [{

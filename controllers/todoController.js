@@ -1,14 +1,15 @@
-const { Todo } = require('../models');
+const { List } = require('../models');
 
 module.exports = {
   // fetches list items for List
-  getTodos: async (req, res) => {
+  getLists: async (req, res) => {
+    console.log('in controller');
     try {
-      const todos = await Todo.find();
-      if (!todos) {
-        return res.status(200).json({ error: 'No todos found' });
+      const lists = await List.find();
+      if (!lists) {
+        return res.status(200).json({ error: 'No lists found' });
       }
-      return res.json(todos);
+      return res.json(lists);
     } catch (e) {
       return res.status(403).json({ e });
     }
