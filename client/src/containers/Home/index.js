@@ -16,6 +16,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles';
 
 import { getUserLists } from '../../actions/todos';
+import ListItems from '../../components/ListItems';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -82,7 +83,7 @@ const Home = () => {
     }
 
     fetchLists();
-  }, [dispatch]);
+  }, []);
   // useEffect(() => {
   //   if (!lists || lists.length === 0) {
   //     dispatch(getUserLists());
@@ -108,13 +109,13 @@ const Home = () => {
           onChange={handleChange}
           className={classes.tabs}
         >
-         {userLists?.map(({title, todos, _id}, index) => (
-           <Tab
-           label={title}
-           id={`simple-tab-${index}`}
-           key={_id}
-           />
-         ))}
+          {userLists?.map(({ title, todos, _id }, index) => (
+            <Tab
+              label={title}
+              id={`simple-tab-${index}`}
+              key={_id}
+            />
+          ))}
           {/* <Tab label='first tab' /> */}
           {/* <Tab label='Item One' />
           <Tab label='Item Two' />
@@ -123,13 +124,14 @@ const Home = () => {
           <Tab label='Item Five' />
           <Tab label='Item Six' />
         <Tab label='Item Seven' /> */}
-          {/* <Button className={classes.absolute}>Add</Button> */}
+          <Button className={classes.absolute}>Add</Button>
         </Tabs>
         <TabPanel index={value} value={value} >
           <div>
-          {userLists[value]?.todos?.map(({text, _id}, i) => (
+            {/* {userLists[value]?.todos?.map(({text, _id}, i) => (
             <li key={_id}>{i+1}: {text}</li>
-          ))}
+          ))} */}
+            <ListItems items={userLists[value]} />
           </div>
         </TabPanel>
         {/* <TabPanel value={value} index={value}>{value + 1}</TabPanel> */}
