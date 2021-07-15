@@ -10,6 +10,7 @@ import {
   Box,
   Tooltip,
   Fab,
+  Button,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,13 +44,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -82,12 +76,13 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const fetLists = async () => {
-      setLists(await dispatch(getUserLists()));
+    const fetchLists = async () => {
+      // setLists(await dispatch(getUserLists()));
+      await dispatch(getUserLists());
     }
 
-    fetLists();
-  }, [lists]);
+    fetchLists();
+  }, [dispatch]);
   // useEffect(() => {
   //   if (!lists || lists.length === 0) {
   //     dispatch(getUserLists());
@@ -104,25 +99,40 @@ const Home = () => {
         {/* {lists?.map(({title, _id, index}) => {
           return <div key={_id}>{title}{index}</div>
         })} */}
+        {console.log('lists', userLists)}
+        {console.log('state.lists', userLists[value])}
         <Tabs
           orientation='vertical'
           variant='scrollable'
           value={value}
           onChange={handleChange}
-          aria-label='Vertical tabs example'
           className={classes.tabs}
         >
-         
-          <Tab label='Item One' {...a11yProps(0)} />
-          <Tab label='Item Two' {...a11yProps(1)} />
-          <Tab label='Item Three' {...a11yProps(2)} />
-          <Tab label='Item Four' {...a11yProps(3)} />
-          <Tab label='Item Five' {...a11yProps(4)} />
-          <Tab label='Item Six' {...a11yProps(5)} />
-          <Tab label='Item Seven' {...a11yProps(6)} />
-          <Tab className={classes.absolute} label='Add' />
+         {userLists?.map(({title, todos, _id}, index) => (
+           <Tab
+           label={title}
+           id={`simple-tab-${index}`}
+           key={_id}
+           />
+         ))}
+          {/* <Tab label='first tab' /> */}
+          {/* <Tab label='Item One' />
+          <Tab label='Item Two' />
+          <Tab label='Item Three' />
+          <Tab label='Item Four' />
+          <Tab label='Item Five' />
+          <Tab label='Item Six' />
+        <Tab label='Item Seven' /> */}
+          {/* <Button className={classes.absolute}>Add</Button> */}
         </Tabs>
-        <TabPanel value={value} index={0}>{value + 1}</TabPanel>
+        <TabPanel index={value} value={value} >
+          <div>
+          {userLists[value]?.todos?.map(({text, _id}, i) => (
+            <li key={_id}>{i+1}: {text}</li>
+          ))}
+          </div>
+        </TabPanel>
+        {/* <TabPanel value={value} index={value}>{value + 1}</TabPanel> */}
         <Tooltip title='Add' aria-label='add'>
           <Fab color='primary' placement='bottom-end' className={classes.absolute}>
             {/* <Fab color='primary' placement='bottom-end'> */}
