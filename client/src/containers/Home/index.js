@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [lists, setLists] = useState({}); // probably don't need anymore
 
   const userLists = useSelector(state => state.lists.getLists);
+
   const dispatch = useDispatch();
 
   const handleChange = (event, newValue) => {
@@ -87,6 +87,7 @@ const Home = () => {
 
   return (
     <>
+        <Button>Hello</Button>
       <div className={classes.root}>
         <Tabs
           orientation='vertical'
@@ -105,12 +106,13 @@ const Home = () => {
         </Tabs>
         <TabPanel index={value} value={value} >
             <ListItems items={userLists[value]} />
-        </TabPanel>
+
         <Tooltip title='Add' aria-label='add'>
           <Fab color='primary' placement='bottom-end' className={classes.absolute}>
             <AddIcon />
           </Fab>
         </Tooltip>
+        </TabPanel>
       </div>
     </>
   )
