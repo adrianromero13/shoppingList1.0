@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Input } from '../../components/Constants';
 import { AUTH_USER, AUTH_USER_ERROR } from '../../actions/types';
+import { getCurrentUser } from '../../actions/user';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,7 +50,8 @@ const Signin = (props) => {
       console.log('data received', data);
       localStorage.setItem('token', data.token);
       dispatch({ type: AUTH_USER, payload: data })
-      props.history.push('/');
+      props.history.push('/')
+      dispatch(getCurrentUser());
     } catch (e) {
       dispatch({ type: AUTH_USER_ERROR, payload: e })
       alert('error', e);
