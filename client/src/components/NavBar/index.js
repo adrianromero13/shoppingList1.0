@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -25,22 +26,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar({isAuth}) {
+function MenuContainer(props) {
+  const { children, id, button } = props;
+
+  return (
+    <PopupState variant='popover' popupId={id}>
+      {(popupState) => (
+        <>
+          {button}
+        </>
+      )}
+    </PopupState>
+    // <Menu
+    //   id="menu-appbar"
+    //   anchorE1={anchor}
+    //   anchorOrigin={{
+    //     vertical: 'top',
+    //     horizontal: 'right',
+    //   }}
+    //   keepMounted
+    //   transformOrigin={{
+    //     vertical: 'top',
+    //     horizontal: 'right',
+    //   }}
+    //   open={openMenu}
+    //   onClose={onClose}
+    // >
+    //   {children}
+    // </Menu>
+  )
+}
+
+export default function NavBar({ isAuth }) {
   const classes = useStyles();
   const history = useHistory();
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  // const [anchorEl, setAnchorEl] = useState(null);
 
-  const open = Boolean(anchorEl);
   const user = useSelector(state => state.currentUser.getUserData);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  //  const handleOpen = (event) => {
+  //    setAnchorEl(event.currentTarget);
+  //  }
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  //   const handleClose = () => {
+  //   //  setAnchor({anchor1: null, anchor2: null})
+  //   setAnchorEl(null);
+  //   };
 
   const dispatch = useDispatch();
 
@@ -52,30 +84,62 @@ export default function NavBar({isAuth}) {
     fetchUser();
   }, []);
 
+  const handleClose = (popupState) => {
+    alert('clicked');
+    popupState.close();
+  }
+
   return (
     <div className={classes.root}>
-      {console.log('check this', user)}
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
+            aria-label="list menu"
+            aria-haspopup='true'
+            onClick={handleOpen}
+          > */}
+
+          <PopupState variant='popover' popupId='list-popup-menu'>
+            {(popupState) => (
+              <>
+                <MenuIcon {...bindTrigger(popupState)}/>
+                <Menu {...bindMenu(popupState)}>
+                  <MenuItem onClick={() => handleClose(popupState)}>Hello</MenuItem>
+                </Menu>
+              </>
+            )}
+          </PopupState>
+
+
+          {/* <MenuContainer anchor={anchor?.anchor2} openMenu={openListMenu} onClose={handleClose}> */}
+          {/* </IconButton> */}
+
+          <Typography variant='h6' className={classes.title}>
             Title of List Type
           </Typography>
           {user && (
             <div>
               {isAuth ? `Hello ${user?.firstName} ${user?.lastName}` : 'Welcome To ShoppersList'}
-              <IconButton
+
+
+              <PopupState variant='popover' popupId='user-popup-menu'>
+            {(popupState) => (
+              <>
+                <AccountCircle {...bindTrigger(popupState)}/>
+                <Menu {...bindMenu(popupState)}>
+                  <MenuItem onClick={() => history.push('/signout') && popupState.close}>Signout</MenuItem>
+                </Menu>
+              </>
+            )}
+          </PopupState>
+              {/* <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleMenu}
+                onClick={handleOpen}
                 color="inherit"
               >
                 <AccountCircle />
@@ -92,12 +156,12 @@ export default function NavBar({isAuth}) {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
-                open={open}
+                open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {/* <MenuItem onClick={() => history.push('/') && handleClose}>Home</MenuItem> */}
+                <MenuItem onClick={() => history.push('/') && handleClose}>Home</MenuItem>
                 <MenuItem onClick={() => history.push('/signout') && handleClose}>Signout</MenuItem>
-              </Menu>
+              </Menu> */}
             </div>
           )}
         </Toolbar>

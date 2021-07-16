@@ -30,6 +30,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const isAuth = useSelector(state => state.auth.authenticated);
+  
 useEffect(() => {
   if (isAuth) {
     setLoggedIn(true);
