@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Grid, Button, Typography } from '@material-ui/core';
 
 import { signOut } from '../../actions/auth';
+import { getCurrentUser } from '../../actions/user';
 
 const Signout = () => {
   const dispatch = useDispatch();

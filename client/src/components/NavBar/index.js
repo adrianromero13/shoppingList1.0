@@ -1,84 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import Switch from '@material-ui/core/Switch';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
+import { getCurrentUser } from '../../actions/user';
 // import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    
+
   },
   title: {
     flexGrow: 1,
   },
 }));
 
-export default function NavBar({user}) {
-
+export default function NavBar({isAuth}) {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState(0);
-
   const history = useHistory();
-  console.log('user in navbar', user);
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  }
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
-
-  const handleAuthChange = (event) => {
-    setAuth(event.target.checked);
-  };
+  const user = useSelector(state => state.currentUser.getUserData);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    // if(selected === 'signup') {
-    //   history.push('/signup');
-    // } else if (selected === 'signout') {
-    //   history.push('/signout');
-    // }
     setAnchorEl(null);
   };
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      await dispatch(getCurrentUser());
+    }
+
+    fetchUser();
+  }, []);
+
   return (
     <div className={classes.root}>
+      {console.log('check this', user)}
       <AppBar position="static">
         <Toolbar>
-          <IconButton 
-          edge="start" 
-          className={classes.menuButton} 
-          color="inherit" 
-          aria-label="menu"
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Title of List Type
-            {/* <NavButtons value={value} handleChange={handleTabChange}/> */}
-
           </Typography>
-          {auth && (
+          {user && (
             <div>
-              {user?.firstName !== undefined && user ? `Hello ${user?.firstName} ${user?.lastName}` : 'Welcome To ShoppersList' }
+              {isAuth ? `Hello ${user?.firstName} ${user?.lastName}` : 'Welcome To ShoppersList'}
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -103,7 +95,7 @@ export default function NavBar({user}) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={() => history.push('/') && handleClose}>Home</MenuItem>
+                {/* <MenuItem onClick={() => history.push('/') && handleClose}>Home</MenuItem> */}
                 <MenuItem onClick={() => history.push('/signout') && handleClose}>Signout</MenuItem>
               </Menu>
             </div>

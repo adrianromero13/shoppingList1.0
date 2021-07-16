@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+// import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 // import actions
-import { getCurrentUser } from '../../actions/user';
+// import { getCurrentUser } from '../../actions/user';
 
 // import components
 import NavBar from '../../components/NavBar';
@@ -26,48 +27,25 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const [user, setUser ] = useState();
-  const currentUser = useSelector(state => state.currentUser.getUserData);
-  useEffect(() => {
-    if(!user || user?.firstName === undefined) {
-      dispatch(getCurrentUser()) && setUser(currentUser);
-    }
-    return () => {
-      //
-    }
-  }, [currentUser, user])
-// dispatch(getCurrentUser());
-  // const mounted = useRef();
-
-
-  // useEffect(() => {
-  //   if(!mounted.current) {
-  //     dispatch(getCurrentUser());
-  //     setUser(currentUser);
-  //     mounted.current = true;
-  //   } else {
-  //     if(user !== undefined) {
-  //       dispatch(getCurrentUser());
-  //       setUser(currentUser);
-  //     }
-  //   }
-  // }, [currentUser, dispatch, user])
-  // useEffect(() => {
-   
-  //   dispatch(getCurrentUser());
-  //   setUser(currentUser);
-  //   return () => {
-  //     //
-  //   }
-  // }, [currentUser, dispatch]);
+  const isAuth = useSelector(state => state.auth.authenticated);
+useEffect(() => {
+  if (isAuth) {
+    setLoggedIn(true);
+  } else setLoggedIn(false);
+  return () => {
+    //
+  }
+}, [isAuth]) 
 
   return (
     <div className={classes.root}>
+      {console.log('loggedin', loggedIn)}
+      {console.log('isAugh', isAuth)}
       <Grid className={classes.display}>
         <Grid item xs={12}>
-          <NavBar user={user}/>
+          <NavBar isAuth={loggedIn}/>
         </Grid>
         <Switch>
           {/* Routed components  */}
