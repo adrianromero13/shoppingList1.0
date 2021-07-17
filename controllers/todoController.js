@@ -3,7 +3,6 @@ const { List } = require('../models');
 module.exports = {
   // fetches list items for List
   getLists: async (req, res) => {
-    console.log('in controller');
     try {
       const lists = await List.find();
       if (!lists) {

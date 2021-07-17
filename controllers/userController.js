@@ -14,6 +14,7 @@ module.exports = {
 
   addList: async (req, res) => {
     const { title } = req.body;
+    console.log('addlist controller body', req.body);
     if (!title) {
       return res.status(400).json({ error: 'You must provide info to list' });
     }
