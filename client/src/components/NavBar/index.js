@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import { getCurrentUser } from '../../actions/user';
 // import Button from '@material-ui/core/Button';
+import CreateListModal from '../../containers/ListModal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,8 +48,16 @@ export default function NavBar({ isAuth }) {
 
   const handleMenuOption = (popupState) => {
     setOpen(true);
-    popupState.close();
+    // handleModalClose(popupState);
+    // popupState.close();
   }
+  const handleModalClose = () => {
+    setOpen(false);
+  }
+  // const handleModalClose = (popupState) => {
+  //   popupState.close();
+  //   setOpen(false);
+  // }
 
   return (
     <div className={classes.root}>
@@ -61,10 +70,11 @@ export default function NavBar({ isAuth }) {
                 <MenuIcon {...bindTrigger(popupState)}/>
                 <Menu {...bindMenu(popupState)}>
                   <MenuItem onClick={() => handleMenuOption(popupState)}>Create New List</MenuItem>
+                  <CreateListModal open={open} close={handleModalClose} popupState={popupState} />
                 </Menu>
               </>
             )}
-          </PopupState>
+          </PopupState> 
 
           <Typography 
           align='center' 
