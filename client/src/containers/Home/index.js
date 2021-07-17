@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
   },
   absolute: {
     position: 'absolute',
-    bottom: theme.spacing(0),
-    right: theme.spacing(0),
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -87,7 +87,6 @@ const Home = () => {
 
   return (
     <>
-        <Button>Hello</Button>
       <div className={classes.root}>
         <Tabs
           orientation='vertical'

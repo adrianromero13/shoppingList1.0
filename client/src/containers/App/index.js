@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-// import actions
-// import { getCurrentUser } from '../../actions/user';
 
 // import components
 import NavBar from '../../components/NavBar';
@@ -17,10 +14,14 @@ import Signout from '../Signout';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'center',
   },
   display: {
     maxWidth: 700,
     margin: `${theme.spacing(1)}px auto`,
+    // margin: 'auto',
     padding: theme.spacing(2),
   }
 }));
@@ -30,15 +31,15 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const isAuth = useSelector(state => state.auth.authenticated);
-  
-useEffect(() => {
-  if (isAuth) {
-    setLoggedIn(true);
-  } else setLoggedIn(false);
-  return () => {
-    //
-  }
-}, [isAuth]) 
+
+  useEffect(() => {
+    if (isAuth) {
+      setLoggedIn(true);
+    } else setLoggedIn(false);
+    return () => {
+      //
+    }
+  }, [isAuth])
 
   return (
     <div className={classes.root}>
@@ -46,7 +47,7 @@ useEffect(() => {
       {console.log('isAugh', isAuth)}
       <Grid className={classes.display}>
         <Grid item xs={12}>
-          <NavBar isAuth={loggedIn}/>
+          <NavBar isAuth={loggedIn} />
         </Grid>
         <Switch>
           {/* Routed components  */}
