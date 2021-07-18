@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { getUserLists } from '../../actions/todos';
 import ListItems from '../../components/ListItems';
+import ItemForm from '../ItemForm';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,7 +55,10 @@ const useStyles = makeStyles((theme) => ({
   },
   absolute: {
     position: 'absolute',
-    bottom: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: theme.spacing(3),
     right: theme.spacing(2),
   },
   tabs: {
@@ -67,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   const userLists = useSelector(state => state.lists.getLists);
 
@@ -75,6 +80,12 @@ const Home = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const toggleVisibility = () => {
+    if(visible) {
+      setVisible(false)
+    } else setVisible(true)
+  }
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -88,6 +99,7 @@ const Home = () => {
   return (
     <>
       <div className={classes.root}>
+        {console.log('visible: ', visible)}
         <Tabs
           orientation='vertical'
           variant='scrollable'
@@ -105,12 +117,14 @@ const Home = () => {
         </Tabs>
         <TabPanel index={value} value={value} >
             <ListItems items={userLists[value]} />
-
+            <div className={classes.absolute}>
+              {visible && <ItemForm visible={visible} id={userLists[value]?._id} title={userLists[value]?.title}/>}
         <Tooltip title='Add' aria-label='add'>
-          <Fab color='primary' placement='bottom-end' className={classes.absolute}>
-            <AddIcon />
+          <Fab color='primary' placement='bottom-end'>
+            <AddIcon onClick={toggleVisibility}/>
           </Fab>
         </Tooltip>
+            </div>
         </TabPanel>
       </div>
     </>
