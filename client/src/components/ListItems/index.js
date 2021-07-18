@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     // textAlign: 'center',
-    margin: 'auto, 0',
+    // margin: 'auto, 0',
+    marginTop: '10%'
   },
   background: {
     backgroundColor: theme.palette.background.paper,
@@ -28,9 +29,7 @@ export default function ListItems({ items }) {
   // states
   return (
     <div className={classes.root}>
-      <Typography variant='h6'>
-        {items?.title}
-      </Typography>
+      
       <Grid item className={classes.background}>
         <List>
           {items?.todos?.length !== 0 ? items?.todos?.map(({ text, _id }, i) => (

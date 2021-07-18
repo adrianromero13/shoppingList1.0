@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles';
+import grey from '@material-ui/core/colors/grey';
 
 import { getUserLists } from '../../actions/todos';
 import ListItems from '../../components/ListItems';
@@ -19,13 +20,13 @@ import ItemForm from '../ItemForm';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
+  
   return (
     <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      {...other}
+    role='tabpanel'
+    hidden={value !== index}
+    id={`vertical-tabpanel-${index}`}
+    {...other}
     >
       {value === index && (
         <Box p={3}>
@@ -43,6 +44,7 @@ TabPanel.propTypes = {
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
+const customColor = grey[800];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,8 +52,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: '65vh',
+    // height: 'inherit',
     width: '100%',
     position: 'relative',
+    '& .MuiBox-root': {
+      margin: 'auto',
+      // marginTop: '24px',
+    },
   },
   absolute: {
     position: 'absolute',
@@ -66,11 +73,26 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     position: 'relative',
   },
+  tabPannel: {
+    maxHeight: '85%',
+    overflow: 'auto',
+  },
+  listTitle: {
+    background: customColor,
+    // position: '-webkit-sticky',
+    position: 'sticky',
+    top: 0,
+    // height: '100%',
+    // bottom: 0, 
+    // paddingTop: '40px',
+    // paddingBottom: '40px',
+    zIndex: 5,
+  },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(null);
   const [visible, setVisible] = useState(false);
 
   const userLists = useSelector(state => state.lists.getLists);
@@ -82,7 +104,7 @@ const Home = () => {
   };
 
   const toggleVisibility = () => {
-    if(visible) {
+    if (visible) {
       setVisible(false)
     } else setVisible(true)
   }
@@ -99,7 +121,6 @@ const Home = () => {
   return (
     <>
       <div className={classes.root}>
-        {console.log('visible: ', visible)}
         <Tabs
           orientation='vertical'
           variant='scrollable'
@@ -107,29 +128,42 @@ const Home = () => {
           onChange={handleChange}
           className={classes.tabs}
         >
-          {userLists?.map(({ title, _id }, index) => (
-         <Tab
+          {userLists ? userLists?.map(({ title, _id }, index) => (
+            <Tab
               label={title}
               id={`simple-tab-${index}`}
               key={_id}
-              />
-          ))}
+            />
+          ))
+            :
+            <Tab label='Create A List' />
+          }
         </Tabs>
-        <TabPanel index={value} value={value} >
-            <ListItems items={userLists[value]} />
-            <div className={classes.absolute}>
-              {visible && <ItemForm 
-              visible={visible} 
-              id={userLists[value]?._id} 
+        <TabPanel index={value} value={value} className={classes.tabPannel}>
+          <Typography component='h1' variant='h6' className={classes.listTitle}>
+            {userLists ? userLists[value]?.title : 'Select a List'}
+          </Typography>
+
+          <ListItems items={userLists[value]} />
+          <div className={classes.absolute}>
+            {visible && <ItemForm
+              visible={visible}
+              id={userLists[value]?._id}
               title={userLists[value]?.title}
               setVisible={setVisible}
-              />}
-        <Tooltip title='Add' aria-label='add'>
-          <Fab color='primary' placement='bottom-end'>
-            <AddIcon onClick={toggleVisibility}/>
-          </Fab>
-        </Tooltip>
-            </div>
+            />}
+
+            {value !== null ?
+              <Tooltip title='Add' aria-label='add'>
+                <Fab color='primary' placement='bottom-end'>
+                  <AddIcon onClick={toggleVisibility} />
+                </Fab>
+              </Tooltip>
+              :
+              null
+            }
+
+          </div>
         </TabPanel>
       </div>
     </>
