@@ -118,7 +118,12 @@ const Home = () => {
         <TabPanel index={value} value={value} >
             <ListItems items={userLists[value]} />
             <div className={classes.absolute}>
-              {visible && <ItemForm visible={visible} id={userLists[value]?._id} title={userLists[value]?.title}/>}
+              {visible && <ItemForm 
+              visible={visible} 
+              id={userLists[value]?._id} 
+              title={userLists[value]?.title}
+              setVisible={setVisible}
+              />}
         <Tooltip title='Add' aria-label='add'>
           <Fab color='primary' placement='bottom-end'>
             <AddIcon onClick={toggleVisibility}/>

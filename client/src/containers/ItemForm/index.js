@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grow, Fade, Button, Collapse } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 
+import { createItem, getUserLists } from '../../actions/todos';
+import { CREATE_USER_TODO_ERROR } from '../../actions/types';
 import { Input } from '../../components/Constants';
 
 const useStyles = makeStyles(theme => ({
@@ -27,17 +29,20 @@ export default function ItemForm(props) {
   const dispatch = useDispatch();
 
   // handlesubmit function
-  const onSubmit = async (formValues) => {
-    alert(`submitting: ${JSON.stringify(formValues)}`);
-    // try {
-
-    // } catch (e) {
-
-    // }
+  const onSubmit = async (formValues) => {  
+    const listId = props.id;
+    try {
+      await dispatch(createItem(formValues, listId));
+      props.setVisible(false);
+      await dispatch(getUserLists());
+    } catch (e) {
+      dispatch({type: CREATE_USER_TODO_ERROR, payload: e });
+      alert(`Error: ${e}`)
+    }
   }
 
   return (
-      <Fade in={props.visible} style={{ transformOrigin: '0 0 0' }} {...(props.visible ? { timeout: 500} : {})}>
+      <Grow in={props.visible} style={{ transformOrigin: '0 0 0' }} {...(props.visible ? { timeout: 500} : {})}>
         <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
           <Input
             inputRef={register('text', { required: true })}
@@ -52,6 +57,6 @@ export default function ItemForm(props) {
             <CheckIcon />
           </Button>
         </form>
-      </Fade>
+      </Grow>
   )
 }

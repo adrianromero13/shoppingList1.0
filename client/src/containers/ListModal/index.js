@@ -46,9 +46,9 @@ const CreateListModal = (props) => {
   const onSubmit = async (formValues) => {
     // console.log('formvalues submitted', JSON.stringify(formValues));
     try {
-      dispatch(createList(formValues));
-      dispatch(getUserLists());
+      await dispatch(createList(formValues));
       props.popupState.close();
+      await dispatch(getUserLists());
     } catch (e) {
       dispatch({ type: CREATE_USER_LIST_ERROR, payload: e })
       alert('error', e);

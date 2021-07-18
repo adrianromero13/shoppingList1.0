@@ -38,7 +38,8 @@ module.exports = {
   },
 
   addTodo: async (req, res) => {
-    const { text, listId } = req.body;
+    const { text } = req.body;
+    const { listId } = req.params;
     // find list
     const userList = await List.findById(listId);
     if (!text) {
