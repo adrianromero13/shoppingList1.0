@@ -14,6 +14,6 @@ router.route('/list')
   .get(requireAuth, getLists)
   .post(requireAuth, addList);
 
-router.route('/todo')
+router.route('/todo/:listId')
   .post(requireAuth, addTodo);
 module.exports = router;
