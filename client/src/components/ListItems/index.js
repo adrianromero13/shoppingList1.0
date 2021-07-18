@@ -12,7 +12,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    textAlign: 'right',
+    // textAlign: 'center',
     margin: 'auto, 0',
   },
   background: {
@@ -28,21 +28,23 @@ export default function ListItems({ items }) {
   // states
   return (
     <div className={classes.root}>
+      <Typography variant='h6'>
+        {items?.title}
+      </Typography>
       <Grid item className={classes.background}>
-        <Typography variant='h6'>
-          {items?.title}
-        </Typography>
         <List>
-      {items?.todos?.map(({ text, _id }, i) => (
-          <ListItem key={_id}>
-            <ListItemAvatar>
-                <ArrowForwardIosIcon color='primary' fontSize='small'/>
-            </ListItemAvatar>
-            <ListItemText
-            primary={`${i+1}: ${text}`}
-            />
-          </ListItem>
-        ))}
+          {items?.todos?.length !== 0 ? items?.todos?.map(({ text, _id }, i) => (
+            <ListItem key={_id}>
+              <ListItemAvatar>
+                <ArrowForwardIosIcon color='primary' fontSize='small' />
+              </ListItemAvatar>
+              <ListItemText
+                primary={text}
+              />
+            </ListItem>
+          ))
+            : <ListItem>List still doesn't have items</ListItem>
+          }
         </List>
       </Grid>
     </div>
