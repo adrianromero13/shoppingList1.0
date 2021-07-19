@@ -8,12 +8,10 @@ import {
   Box,
   Tooltip,
   Fab,
-  Button,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
-
 import { getUserLists } from '../../actions/todos';
 import ListItems from '../../components/ListItems';
 import ItemForm from '../ItemForm';
@@ -52,12 +50,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: '65vh',
-    // height: 'inherit',
     width: '100%',
     position: 'relative',
     '& .MuiBox-root': {
       margin: 'auto',
-      // marginTop: '24px',
     },
   },
   absolute: {
@@ -82,10 +78,6 @@ const useStyles = makeStyles((theme) => ({
     // position: '-webkit-sticky',
     position: 'sticky',
     top: 0,
-    // height: '100%',
-    // bottom: 0, 
-    // paddingTop: '40px',
-    // paddingBottom: '40px',
     zIndex: 5,
   },
 }));
@@ -141,10 +133,11 @@ const Home = () => {
         </Tabs>
         <TabPanel index={value} value={value} className={classes.tabPannel}>
           <Typography component='h1' variant='h6' className={classes.listTitle}>
-            {userLists ? userLists[value]?.title : 'Select a List'}
+            {value !== null ? userLists[value]?.title : 'Select a List'}
           </Typography>
 
           <ListItems items={userLists[value]} />
+
           <div className={classes.absolute}>
             {visible && <ItemForm
               visible={visible}

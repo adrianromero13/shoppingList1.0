@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grow, Fade, Button, Collapse } from '@material-ui/core';
+import { Grow, Button } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 
 import { createItem, getUserLists } from '../../actions/todos';
@@ -12,7 +12,6 @@ import { Input } from '../../components/Constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    // width: '100%',
   },
   container: {
     display: 'flex',
@@ -20,11 +19,11 @@ const useStyles = makeStyles(theme => ({
   paper: {
     margin: theme.spacing(1),
   },
-})); // might not need
+})); 
 
 
 export default function ItemForm(props) {
-  const classes = useStyles(); // might not need
+  const classes = useStyles(); 
   const { register, handleSubmit, control } = useForm();
   const dispatch = useDispatch();
 
@@ -59,4 +58,4 @@ export default function ItemForm(props) {
         </form>
       </Grow>
   )
-}
+};

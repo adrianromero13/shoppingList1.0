@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { Grid, Button, Typography } from '@material-ui/core';
+import {
+  Grid,
+  Button,
+  Typography,
+} from '@material-ui/core';
 
 import { signOut } from '../../actions/auth';
-import { getCurrentUser } from '../../actions/user';
 
 const Signout = () => {
   const dispatch = useDispatch();
@@ -14,20 +17,20 @@ const Signout = () => {
     return () => {
       //
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <Grid>
       <Typography as='h1' variant='h4'>
         See you next time
       </Typography>
-      <Button 
-      component={Link}
-      to='/signin' 
-      variant='contained'
-       >Go back to sign in</Button>
+      <Button
+        component={Link}
+        to='/signin'
+        variant='contained'
+      >Go back to sign in</Button>
     </Grid>
   )
-}
+};
 
 export default Signout;

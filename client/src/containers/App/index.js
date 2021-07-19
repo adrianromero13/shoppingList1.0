@@ -14,14 +14,10 @@ import Signout from '../Signout';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'center',
   },
   display: {
     maxWidth: 700,
     margin: `${theme.spacing(1)}px auto`,
-    // margin: 'auto',
     padding: theme.spacing(2),
   }
 }));
@@ -43,8 +39,6 @@ const App = () => {
 
   return (
     <div className={classes.root}>
-      {console.log('loggedin', loggedIn)}
-      {console.log('isAugh', isAuth)}
       <Grid className={classes.display}>
         <Grid item xs={12}>
           <NavBar isAuth={loggedIn} />

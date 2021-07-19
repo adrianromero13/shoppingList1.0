@@ -1,47 +1,10 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
-
-import { makeStyles } from '@material-ui/core/styles';
+import { Controller } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
 
-
 /**
- * @description custom form 
- * 
+ * @description custom Input
  */
-
- // couldn't get this to work
-// export function Form({
-//   defaultValue,
-//   // values,
-//   children,
-//   onSubmit,
-//   className,
-// }) {
-//   // const methods = useForm({ defaultValue });
-//   const methods = useForm();
-//   const { handleSubmit, register } = methods;
-  
-//   return (
-//     <form 
-//     onSubmit={handleSubmit(onSubmit)} 
-//     className={className}
-//     noValidate
-//     >
-//       {React.Children.map(children, child => {
-//         return child.props.name
-//           ? React.createElement(child.type, {
-//             ...{
-//               ...child.props,
-//               register: methods.register,
-//               key: child.props.name
-//             }
-//           })
-//           : child;
-//       })}
-//     </form>
-//   )
-// }
 
 export function Input({
   inputRef,
@@ -69,10 +32,10 @@ export function Input({
           onChange={value => onChange(value)}
           error={!!error}
           helperText={error ? error.message : null}
+          {...rest}
         />
       )}
       rules={rules}
     />
   )
-}
-
+};
