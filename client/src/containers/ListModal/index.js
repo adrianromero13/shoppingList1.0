@@ -44,7 +44,6 @@ const CreateListModal = (props) => {
 
   // onsubmit funciton
   const onSubmit = async (formValues) => {
-    // console.log('formvalues submitted', JSON.stringify(formValues));
     try {
       await dispatch(createList(formValues));
       props.popupState.close();

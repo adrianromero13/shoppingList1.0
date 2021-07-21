@@ -65,7 +65,6 @@ export default function NavBar({ isAuth }) {
 
   return (
     <div className={classes.root}>
-      {console.log('open is set to:', open)}
       <AppBar position="static">
         <Toolbar>
           {isAuth && <PopupState variant='popover' popupId='list-popup-menu'>

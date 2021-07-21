@@ -29,7 +29,6 @@ export const getUserLists = () => async dispatch => {
     const { data } = await axios.get('/api/user/list',
       { headers: { 'authorization': localStorage.getItem('token') } });
     dispatch({ type: GET_USER_LISTS, payload: data })
-    console.log('getUserLists action', data)
   } catch (e) {
     dispatch({ type: GET_USER_LISTS_ERROR, payload: e });
   }
@@ -43,14 +42,12 @@ export const createList = (listValues) => async (dispatch) => {
       { headers: { 'authorization': localStorage.getItem('token') } },
     );
     dispatch({ type: CREATE_USER_LIST, payload: data });
-    console.log('createList action', data);
   } catch (e) {
     dispatch({ type: CREATE_USER_LIST_ERROR, payload: e });
   }
 };
 
 export const createItem = (itemValues, id) => async (dispatch) => {
-  console.log('createItem action hit:', itemValues, id)
   try {
     const { data } = await axios.post(
       `/api/user/list/todo/${id}`,
@@ -58,14 +55,12 @@ export const createItem = (itemValues, id) => async (dispatch) => {
       { headers: { 'authorization': localStorage.getItem('token') } },
     );
     dispatch({ type: CREATE_USER_TODO, payload: data });
-    console.log('createItem action', data);
   } catch (e) {
     dispatch({ type: CREATE_USER_TODO_ERROR, payload: e });
   }
 };
 
 export const deleteItemById = id => async dispatch => {
-  console.log('deleteItem action', id);
   try {
     await axios.delete(`/api/user/todo/${id}`,
       { headers: { 'authorization': localStorage.getItem('token') } },
@@ -79,7 +74,6 @@ export const deleteItemById = id => async dispatch => {
 };
 
 export const updateItemById = (id, text, completed) => async dispatch => {
-  console.log('update action', id, text, completed);
   try {
     await axios.put(`/api/user/todo/${id}`,
       { text, completed: !completed },
@@ -90,4 +84,4 @@ export const updateItemById = (id, text, completed) => async dispatch => {
   } catch (e) {
     dispatch({ type: UPDATE_ITEM_BY_ID_ERROR, payload: e });
   }
-}
+};

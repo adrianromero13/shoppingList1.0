@@ -46,15 +46,14 @@ export default function ListItems({ items }) {
               key={_id}
               button
               onClick={() => activateHover(index)}
-              // onMouseEnter={() => activateHover(index)}
               onMouseLeave={() => deactivateHover()}
               selected={hoveringItem === index}
             >
-              <ListItemAvatar>
+              {/* <ListItemAvatar>
                 <ArrowForwardIosIcon color='primary' fontSize='small' />
-              </ListItemAvatar>
+              </ListItemAvatar> */}
               <ListItemText 
-              primary={text}
+              primary={`${index + 1}: ${text}`}
               style={{ textDecoration: completed ? 'line-through' : 'none'}}
               />
               {hoveringItem === index &&
