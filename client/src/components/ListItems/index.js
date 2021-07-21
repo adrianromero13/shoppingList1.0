@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   makeStyles,
   Grid,
@@ -7,6 +8,10 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { deleteItemById } from "../../actions/todos";
+
+import DeleteItemButton from '../../components/DeleteButton';
+import CompleteButton from '../../components/CompleteButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,18 +26,43 @@ const useStyles = makeStyles((theme) => ({
 export default function ListItems({ items }) {
   const classes = useStyles();
 
+  const [hoveringItem, setHoveringItem] = useState(null);
+
+  const activateHover = (index) => {
+    if(index >= 0) {
+      setHoveringItem(index)
+    } else setHoveringItem(null)
+  }
+  const deactivateHover = () => {
+    setHoveringItem(null);
+  }
+
   return (
     <div className={classes.root}>
       <Grid item className={classes.background}>
         <List>
-          {items?.todos?.length !== 0 ? items?.todos?.map(({ text, _id }, i) => (
-            <ListItem key={_id}>
+          {items?.todos?.length !== 0 ? items?.todos?.map(({ text, _id, completed }, index) => (
+            <ListItem
+              key={_id}
+              button
+              onClick={() => activateHover(index)}
+              // onMouseEnter={() => activateHover(index)}
+              onMouseLeave={() => deactivateHover()}
+              selected={hoveringItem === index}
+            >
               <ListItemAvatar>
                 <ArrowForwardIosIcon color='primary' fontSize='small' />
               </ListItemAvatar>
-              <ListItemText
-                primary={text}
+              <ListItemText 
+              primary={text}
+              style={{ textDecoration: completed ? 'line-through' : 'none'}}
               />
+              {hoveringItem === index &&
+                <>
+                  <CompleteButton id={_id} text={text} completed={completed}/>
+                  <DeleteItemButton id={_id} deleteById={deleteItemById} />
+                </>
+              }
             </ListItem>
           ))
             : <ListItem>List still doesn't have items</ListItem>
@@ -41,4 +71,4 @@ export default function ListItems({ items }) {
       </Grid>
     </div>
   )
-}
+};

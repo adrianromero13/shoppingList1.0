@@ -61,4 +61,41 @@ module.exports = {
       return res.status(403).json({ e });
     }
   },
+
+  updateItemById: async (req, res) => {
+    const { itemId } = req.params;
+    const { text, completed } = req.body;
+    try {
+      const itemToUpdate = await Todo.findById(itemId);
+      if (!itemToUpdate) {
+        return res.status(401).json({ error: 'No List Item with that Id' });
+      }
+      if (req.user._id.toString() !== itemToUpdate.user.toString()) {
+        return res.status(401).json({ error: 'You cannot update a list item that is not yours' });
+      }
+      const updatedItem = await Todo.findByIdAndUpdate(itemId,
+        { completed, text },
+        { new: true });
+      return res.json(updatedItem);
+    } catch (e) {
+      return res.status(403).json({ e });
+    }
+  },
+
+  deleteItemById: async (req, res) => {
+    const { itemId } = req.params;
+    try {
+      const itemToDelete = await Todo.findById(itemId);
+      if (!itemToDelete) {
+        return res.status(401).json({ error: 'No Item with that Id' });
+      }
+      if (req.user._id.toString() !== itemToDelete.user.toString()) {
+        return res.status(401).json({ error: 'You cannot delete a list item that is not yours' });
+      }
+      const deletedItem = await Todo.findByIdAndDelete(itemId);
+      return res.json(deletedItem);
+    } catch (e) {
+      return res.status(403).json({ e });
+    }
+  },
 };

@@ -72,10 +72,14 @@ const useStyles = makeStyles((theme) => ({
   tabPannel: {
     maxHeight: '85%',
     overflow: 'auto',
+    '& .MuiBox-root': {
+      padding: 'auto 0',
+    }
   },
   listTitle: {
     background: customColor,
     // position: '-webkit-sticky',
+    margin: 'auto',
     position: 'sticky',
     top: 0,
     zIndex: 5,
@@ -133,7 +137,7 @@ const Home = () => {
         </Tabs>
         <TabPanel index={value} value={value} className={classes.tabPannel}>
           <Typography component='h1' variant='h6' className={classes.listTitle}>
-            {value !== null ? userLists[value]?.title : 'Select a List'}
+            {value !== null ? userLists[value]?.title : 'Need a List, Make a List'}
           </Typography>
 
           <ListItems items={userLists[value]} />

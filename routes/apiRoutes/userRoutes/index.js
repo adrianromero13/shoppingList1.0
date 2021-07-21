@@ -5,6 +5,8 @@ const {
   getLists,
   addList,
   addTodo,
+  deleteItemById,
+  updateItemById,
 } = require('../../../controllers/userController');
 
 router.route('/')
@@ -14,6 +16,11 @@ router.route('/list')
   .get(requireAuth, getLists)
   .post(requireAuth, addList);
 
-router.route('/todo/:listId')
+router.route('/list/todo/:listId')
   .post(requireAuth, addTodo);
+
+router.route('/todo/:itemId')
+  .put(requireAuth, updateItemById)
+  .delete(requireAuth, deleteItemById);
+
 module.exports = router;
