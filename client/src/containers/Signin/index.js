@@ -44,10 +44,8 @@ const Signin = (props) => {
   const dispatch = useDispatch();
 
   const onSubmit = async (formValues) => {
-    console.log('formvalues', formValues);
     try {
       const { data } = await axios.post('/api/auth/signin', formValues);
-      console.log('data received', data);
       localStorage.setItem('token', data.token);
       dispatch({ type: AUTH_USER, payload: data })
       props.history.push('/')

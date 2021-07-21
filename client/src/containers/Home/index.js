@@ -8,8 +8,10 @@ import {
   Box,
   Tooltip,
   Fab,
+  Grid,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove';
 import { makeStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 import { getUserLists } from '../../actions/todos';
@@ -53,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     position: 'relative',
     '& .MuiBox-root': {
-      margin: 'auto',
+      padding: '0 24px',
     },
   },
   absolute: {
@@ -71,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabPannel: {
     maxHeight: '85%',
+    // maxWidth: '55vh',
     overflow: 'auto',
     '& .MuiBox-root': {
       padding: 'auto 0',
@@ -78,11 +81,30 @@ const useStyles = makeStyles((theme) => ({
   },
   listTitle: {
     background: customColor,
+    // display: 'inline',
+    // height: '50px',
+    paddingTop: '24px',
+    display: 'flex',
+    flexWrap: 'nowrap',
+    
+    // flexDirection: 'row',
+    justifyContent: 'space-between',
+    // alignItems: 'baseline',
     // position: '-webkit-sticky',
     margin: 'auto',
     position: 'sticky',
     top: 0,
     zIndex: 5,
+  },
+  remove: {
+    // position: 'absolute',
+    // marginTop: -5,
+
+    alignSelf: 'flex-end',
+    position: 'sticky',
+    // position: 'absolute',
+    // top: theme.spacing(4),
+    // right: theme.spacing(3),
   },
 }));
 
@@ -136,12 +158,15 @@ const Home = () => {
           }
         </Tabs>
         <TabPanel index={value} value={value} className={classes.tabPannel}>
-          <Typography component='h1' variant='h6' className={classes.listTitle}>
+          
+          <Grid className={classes.listTitle}>
+          <Typography component='h1' variant='h6'>
             {value !== null ? userLists[value]?.title : 'Need a List, Make a List'}
           </Typography>
-
+          <RemoveIcon className={classes.remove}/>
+          </Grid>
+          
           <ListItems items={userLists[value]} />
-
           <div className={classes.absolute}>
             {visible && <ItemForm
               visible={visible}
@@ -149,7 +174,6 @@ const Home = () => {
               title={userLists[value]?.title}
               setVisible={setVisible}
             />}
-
             {value !== null ?
               <Tooltip title='Add' aria-label='add'>
                 <Fab color='primary' placement='bottom-end'>
@@ -159,7 +183,6 @@ const Home = () => {
               :
               null
             }
-
           </div>
         </TabPanel>
       </div>

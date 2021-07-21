@@ -47,11 +47,8 @@ const Signup = (props) => {
   const dispatch = useDispatch();
 
   const onSubmit = async (formValues) => {
-    // dispatch(registerUser(data));
-    // props.history.push('/signin')
     try {
       const { data } = await axios.post('/api/auth/signup', formValues);
-      console.log('data recieved', data);
       localStorage.setItem('token', data.token);
       dispatch({ type: AUTH_USER, payload: data.token });
       props.history.push('/signin');
@@ -61,7 +58,6 @@ const Signup = (props) => {
   };
 
   return (
-    // <Container component="main" maxWidth="xs">
     <Grid className={classes.root}>
       <Avatar>
         <LockOutlinedIcon />
@@ -71,8 +67,6 @@ const Signup = (props) => {
         </Typography>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
         <Input
-
-          // {...register('firstName', { required: true })}
           inputRef={register('firstName', { required: true })}
           name='firstName'
           label='First Name'
@@ -82,7 +76,6 @@ const Signup = (props) => {
           type='text'
         />
         <Input
-          // {...forwardRef(register('lastName', { required: true }))}
           inputRef={register('lastName', { required: true })}
           name='lastName'
           label='Last Name'
@@ -92,7 +85,6 @@ const Signup = (props) => {
           type='text'
         />
         <Input
-          // {...forwardRef(register('email', { required: true }))}
           inputRef={register('email', { required: true })}
           name='email'
           label='E-mail'
@@ -120,7 +112,6 @@ const Signup = (props) => {
       </form>
     </Grid>
   )
-}
+};
 
 export default Signup;
-
