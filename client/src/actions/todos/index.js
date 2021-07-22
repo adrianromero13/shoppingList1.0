@@ -47,6 +47,20 @@ export const createList = (listValues) => async (dispatch) => {
   }
 };
 
+export const deleteListById = id => async dispatch => {
+  try {
+    await axios.delete(`/api/user/list/${id}`,
+      { headers: { 'authorization': localStorage.getItem('token') } },
+    );
+    const { data } = await axios.get('/api/user/list',
+      { headers: { 'authorization': localStorage.getItem('token') } }
+    );
+    dispatch({ type: GET_USER_LISTS, payload: data });
+  } catch (e) {
+    dispatch({ type: DELETE_USER_LIST_BY_ID_ERROR, payload: e });
+  }
+};
+
 export const createItem = (itemValues, id) => async (dispatch) => {
   try {
     const { data } = await axios.post(

@@ -27,6 +27,23 @@ module.exports = {
     }
   },
 
+  deleteListById: async (req, res) => {
+    const { listId } = req.params;
+    try {
+      const listToDelete = await List.findById(listId);
+      if (!listToDelete) {
+        return res.status(401).json({ error: 'No List with that Id' });
+      }
+      if (req.user.id.toString() !== listToDelete.user.toString()) {
+        return res.status(401).json({ error: 'You cannot delete a list that is not yours' });
+      }
+      const deletedList = await List.findByIdAndDelete(listId);
+      return res.json(deletedList);
+    } catch (e) {
+      return res.status(403).json({ e });
+    }
+  },
+
   getLists: async (req, res) => {
     try {
       const lists = await List.find({ user: req.user._id }).populate('todos');

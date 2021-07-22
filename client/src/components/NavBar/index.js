@@ -82,6 +82,7 @@ export default function NavBar({ isAuth }) {
 
           <Typography
             align='center'
+            component='h1'
             variant='h6'
             className={classes.title}
           >
@@ -104,10 +105,10 @@ export default function NavBar({ isAuth }) {
                         :
                         [
                           <MenuItem
-                            onClick={() => handleRedirect('signin', popupState)}
+                            key={0} onClick={() => handleRedirect('signin', popupState)}
                           >Sign In</MenuItem>,
                           <MenuItem
-                            onClick={() => handleRedirect('signup', popupState)}
+                            key={1} onClick={() => handleRedirect('signup', popupState)}
                           >Sign Up</MenuItem>
                         ]
                       }

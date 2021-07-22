@@ -19,43 +19,42 @@ const useStyles = makeStyles(theme => ({
   paper: {
     margin: theme.spacing(1),
   },
-})); 
-
+}));
 
 export default function ItemForm(props) {
-  const classes = useStyles(); 
+  const classes = useStyles();
   const { register, handleSubmit, control } = useForm();
   const dispatch = useDispatch();
 
   // handlesubmit function
-  const onSubmit = async (formValues) => {  
+  const onSubmit = async (formValues) => {
     const listId = props.id;
     try {
       await dispatch(createItem(formValues, listId));
       props.setVisible(false);
       await dispatch(getUserLists());
     } catch (e) {
-      dispatch({type: CREATE_USER_TODO_ERROR, payload: e });
+      dispatch({ type: CREATE_USER_TODO_ERROR, payload: e });
       alert(`Error: ${e}`)
     }
   }
 
   return (
-      <Grow in={props.visible} style={{ transformOrigin: '0 0 0' }} {...(props.visible ? { timeout: 500} : {})}>
-        <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
-          <Input
-            inputRef={register('text', { required: true })}
-            name='text'
-            label={`Item for ${props.title}`}
-            control={control}
-            defaultValue=''
-            rules={{ required: 'text is required before you submit' }}
-            type='text'
-          />
-          <Button type='submit'>
-            <CheckIcon />
-          </Button>
-        </form>
-      </Grow>
+    <Grow in={props.visible} style={{ transformOrigin: '0 0 0' }} {...(props.visible ? { timeout: 500 } : {})}>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
+        <Input
+          inputRef={register('text', { required: true })}
+          name='text'
+          label={`Item for ${props.title}`}
+          control={control}
+          defaultValue=''
+          rules={{ required: 'text is required before you submit' }}
+          type='text'
+        />
+        <Button type='submit'>
+          <CheckIcon />
+        </Button>
+      </form>
+    </Grow>
   )
 };

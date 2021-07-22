@@ -17,12 +17,13 @@ import { Input } from '../../components/Constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    // position: 'relative',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     padding: theme.spacing(2),
     '& .MuiTextField-root': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
       width: 300,
     },
     '& .MuiButtonBase-root': {
@@ -33,6 +34,16 @@ const useStyles = makeStyles(theme => ({
     '& .MuiTypography-root': {
       padding: theme.spacing(2),
     },
+  },
+  modal: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3, 1, 3),
+    background: theme.palette.background.paper,
   },
 }));
 
@@ -61,10 +72,11 @@ const CreateListModal = (props) => {
         <Modal
           open={props.open}
           onClose={props.close}
+          className={classes.root}
         >
-          <Grid className={classes.root}>
-            <Typography component='h1' variant='h6'>Hello Modal</Typography>
-            <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
+          <Grid className={classes.modal}>
+            <Typography component='h1' variant='h6'>Create A New list</Typography>
+            <form onSubmit={handleSubmit(onSubmit)} >
               <Input
                 inputRef={register('title', { required: true })}
                 name='title'
