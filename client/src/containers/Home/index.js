@@ -12,12 +12,13 @@ import {
   AppBar,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
-import RemoveIcon from '@material-ui/icons/Remove';
+// import RemoveIcon from '@material-ui/icons/Remove';
 import { makeStyles } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 import { getUserLists } from '../../actions/todos';
 import ListItems from '../../components/ListItems';
 import ItemForm from '../ItemForm';
+import DeleteListModal from '../DeleteListModal';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,7 +33,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>
+          <Typography component={'span'} variant={'body2'}>
             {children}
           </Typography>
         </Box>
@@ -43,12 +44,12 @@ function TabPanel(props) {
 
 TabPanel.propTypes = {
   children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+  index: PropTypes.any,
+  value: PropTypes.any,
 };
 
 function TabsOrientation(props) {
-  const { children, windowSize, ...other } = props;
+  const { children, windowSize } = props;
 
   return (
     <>
@@ -61,7 +62,8 @@ function TabsOrientation(props) {
         </AppBar>}
     </>
   )
-}
+};
+
 
 const customColor = grey[800];
 
@@ -72,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: '65vh',
     width: '100%',
+    overflow: 'hidden',
     position: 'relative',
     '& .MuiBox-root': {
       padding: '0 24px',
@@ -81,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     // display: 'flex',
+    overFlow: 'hidden',
     height: '80vh',
     width: '100%',
     position: 'relative',
@@ -105,7 +109,11 @@ const useStyles = makeStyles((theme) => ({
   tabPannel: {
     maxHeight: '75%',
     width: '100%',
+    // overflowY: 'hidden',
     overflow: 'auto',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
     '& .MuiBox-root': {
       padding: 'auto 0',
     }
@@ -131,6 +139,7 @@ const Home = () => {
   const classes = useStyles();
   const [value, setValue] = useState(null);
   const [visible, setVisible] = useState(false);
+  // const [deleteModal, setDeleteModal] = useState(false);
   const [windowSize, setWindowSize] = useState(null);
 
   const userLists = useSelector(state => state.lists.getLists);
@@ -149,7 +158,6 @@ const Home = () => {
 
   useEffect(() => {
     const fetchLists = async () => {
-      // setLists(await dispatch(getUserLists()));
       await dispatch(getUserLists());
     }
     function handleResize() {
@@ -162,65 +170,64 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <div className={windowSize > 720 ? classes.root : classes.rootVertical}>
-        <TabsOrientation windowSize={windowSize}>
-          <Tabs
-            orientation={windowSize > 720 ? 'vertical' : 'horizontal'}
-            variant='scrollable'
-            value={value}
-            onChange={handleChange}
-            className={windowSize > 720 ? classes.tabs : null}
-          >
-            {userLists ? userLists?.map(({ title, _id }, index) => (
-              <Tab
-                label={title}
-                id={`simple-tab-${index}`}
-                key={_id}
-              />
-            ))
-              :
-              <Tab label='Create A List' />
-            }
-          </Tabs>
-        </TabsOrientation>
+    <div className={windowSize > 720 ? classes.root : classes.rootVertical}>
 
-        <TabPanel
-          index={value}
+      <TabsOrientation windowSize={windowSize}>
+        <Tabs
+          orientation={windowSize > 720 ? 'vertical' : 'horizontal'}
+          variant='scrollable'
           value={value}
-          className={classes.tabPannel}
+          onChange={handleChange}
+          className={windowSize > 720 ? classes.tabs : null}
         >
-          <Grid className={classes.listTitle}>
-            <Typography component='h1' variant='h6'>
-              {value !== null ? userLists[value]?.title : 'Need a List, Make a List'}
-            </Typography>
-            {value !== null ?
-              <RemoveIcon className={classes.remove} list={userLists[value]}/>
-              : null
-            }
-          </Grid>
+          {userLists ? userLists?.map(({ title, _id }, index) => (
+            <Tab
+              label={title}
+              id={`simple-tab-${index}`}
+              key={_id}
+            />
+          ))
+            :
+            <Tab label='Create A List' />
+          }
+        </Tabs>
+      </TabsOrientation>
 
-          <ListItems items={userLists[value]} />
-          <div className={classes.absolute}>
-            {visible && <ItemForm
-              visible={visible}
-              id={userLists[value]?._id}
-              title={userLists[value]?.title}
-              setVisible={setVisible}
-            />}
-            {value !== null ?
-              <Tooltip title='Add' aria-label='add'>
-                <Fab color='primary' placement='bottom-end'>
-                  <AddIcon onClick={toggleVisibility} />
-                </Fab>
-              </Tooltip>
-              :
-              null
-            }
-          </div>
-        </TabPanel>
-      </div>
-    </>
+      <TabPanel
+        index={value}
+        value={value}
+        className={classes.tabPannel}
+      >
+        <Grid className={classes.listTitle}>
+          <Typography component='h1' variant='h6'>
+            {value !== null ? userLists[value]?.title : 'Need a List, Make a List'}
+          </Typography>
+          {value !== null ?
+            <DeleteListModal list={userLists[value]} />
+            : null
+          }
+        </Grid>
+
+        <ListItems items={userLists[value]} />
+        <div className={classes.absolute}>
+          {visible && <ItemForm
+            visible={visible}
+            id={userLists[value]?._id}
+            title={userLists[value]?.title}
+            setVisible={setVisible}
+          />}
+          {value !== null ?
+            <Tooltip title='Add Item' aria-label='additem'>
+              <Fab color='primary' placement='bottom-end'>
+                <AddIcon onClick={toggleVisibility} />
+              </Fab>
+            </Tooltip>
+            :
+            null
+          }
+        </div>
+      </TabPanel>
+    </div>
   )
 };
 

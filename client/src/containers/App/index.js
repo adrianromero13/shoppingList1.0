@@ -5,11 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 
 // import components
-import NavBar from '../../components/NavBar';
 import Home from '../Home';
 import Signup from '../Signup';
 import Signin from '../Signin';
 import Signout from '../Signout';
+import NavBar from '../../components/NavBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {

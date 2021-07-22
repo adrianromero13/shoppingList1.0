@@ -4,12 +4,13 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
 } from "@material-ui/core";
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+
+// import actions
 import { deleteItemById } from "../../actions/todos";
 
+// import components
 import DeleteItemButton from '../../components/DeleteButton';
 import CompleteButton from '../../components/CompleteButton';
 
@@ -45,13 +46,11 @@ export default function ListItems({ items }) {
             <ListItem
               key={_id}
               button
-              onClick={() => activateHover(index)}
+              // onClick={() => activateHover(index)}
+              onMouseEnter={() => activateHover(index)}
               onMouseLeave={() => deactivateHover()}
               selected={hoveringItem === index}
             >
-              {/* <ListItemAvatar>
-                <ArrowForwardIosIcon color='primary' fontSize='small' />
-              </ListItemAvatar> */}
               <ListItemText 
               primary={`${index + 1}: ${text}`}
               style={{ textDecoration: completed ? 'line-through' : 'none'}}

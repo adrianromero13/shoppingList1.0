@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(1),
       width: 300,
     },
-    '& .MuiButtontBase-root': {
+    '& .MuiButtonBase-root': {
       margin: theme.spacing(2),
       width: 300,
       height: 50,
@@ -61,7 +61,7 @@ const Signin = (props) => {
       <Avatar>
         <LockOutlinedIcon />
       </Avatar>
-      <Typography component='h1' variant='5'>
+      <Typography component='h1' variant='h5'>
         Sign In
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>

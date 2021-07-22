@@ -7,6 +7,7 @@ const {
   addTodo,
   deleteItemById,
   updateItemById,
+  deleteListById,
 } = require('../../../controllers/userController');
 
 router.route('/')
@@ -15,6 +16,9 @@ router.route('/')
 router.route('/list')
   .get(requireAuth, getLists)
   .post(requireAuth, addList);
+
+router.route('/list/:listId')
+  .delete(requireAuth, deleteListById);
 
 router.route('/list/todo/:listId')
   .post(requireAuth, addTodo);
