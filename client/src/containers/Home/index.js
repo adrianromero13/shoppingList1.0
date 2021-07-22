@@ -9,6 +9,7 @@ import {
   Tooltip,
   Fab,
   Grid,
+  AppBar,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -20,13 +21,14 @@ import ItemForm from '../ItemForm';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  
+
   return (
     <div
-    role='tabpanel'
-    hidden={value !== index}
-    id={`vertical-tabpanel-${index}`}
-    {...other}
+      role='tabpanel'
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      // id={`scrollable-auto-tabpanel-${index}`}
+      {...other}
     >
       {value === index && (
         <Box p={3}>
@@ -44,6 +46,23 @@ TabPanel.propTypes = {
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
+
+function TabsOrientation(props) {
+  const { children, windowSize, ...other } = props;
+
+  return (
+    <>
+      {windowSize > 720 ? <>
+        {children}
+      </>
+        :
+        <AppBar position='static' color='default'>
+          {children}
+        </AppBar>}
+    </>
+  )
+}
+
 const customColor = grey[800];
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +71,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     height: '65vh',
+    width: '100%',
+    position: 'relative',
+    '& .MuiBox-root': {
+      padding: '0 24px',
+    },
+  },
+  rootVertical: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    // display: 'flex',
+    height: '80vh',
     width: '100%',
     position: 'relative',
     '& .MuiBox-root': {
@@ -69,11 +99,12 @@ const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
     height: '100%',
+    width: '30%',
     position: 'relative',
   },
   tabPannel: {
-    maxHeight: '85%',
-    // maxWidth: '55vh',
+    maxHeight: '75%',
+    width: '100%',
     overflow: 'auto',
     '& .MuiBox-root': {
       padding: 'auto 0',
@@ -81,30 +112,18 @@ const useStyles = makeStyles((theme) => ({
   },
   listTitle: {
     background: customColor,
-    // display: 'inline',
-    // height: '50px',
-    paddingTop: '24px',
+    paddingTop: '10px',
     display: 'flex',
     flexWrap: 'nowrap',
-    
-    // flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignItems: 'baseline',
-    // position: '-webkit-sticky',
     margin: 'auto',
     position: 'sticky',
     top: 0,
     zIndex: 5,
   },
   remove: {
-    // position: 'absolute',
-    // marginTop: -5,
-
     alignSelf: 'flex-end',
     position: 'sticky',
-    // position: 'absolute',
-    // top: theme.spacing(4),
-    // right: theme.spacing(3),
   },
 }));
 
@@ -112,6 +131,7 @@ const Home = () => {
   const classes = useStyles();
   const [value, setValue] = useState(null);
   const [visible, setVisible] = useState(false);
+  const [windowSize, setWindowSize] = useState(null);
 
   const userLists = useSelector(state => state.lists.getLists);
 
@@ -132,40 +152,54 @@ const Home = () => {
       // setLists(await dispatch(getUserLists()));
       await dispatch(getUserLists());
     }
-
+    function handleResize() {
+      setWindowSize(window.innerWidth);
+    }
+    window.addEventListener('resize', handleResize);
     fetchLists();
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
   }, [dispatch]);
 
   return (
     <>
-      <div className={classes.root}>
-        <Tabs
-          orientation='vertical'
-          variant='scrollable'
+      <div className={windowSize > 720 ? classes.root : classes.rootVertical}>
+        <TabsOrientation windowSize={windowSize}>
+          <Tabs
+            orientation={windowSize > 720 ? 'vertical' : 'horizontal'}
+            variant='scrollable'
+            value={value}
+            onChange={handleChange}
+            className={windowSize > 720 ? classes.tabs : null}
+          >
+            {userLists ? userLists?.map(({ title, _id }, index) => (
+              <Tab
+                label={title}
+                id={`simple-tab-${index}`}
+                key={_id}
+              />
+            ))
+              :
+              <Tab label='Create A List' />
+            }
+          </Tabs>
+        </TabsOrientation>
+
+        <TabPanel
+          index={value}
           value={value}
-          onChange={handleChange}
-          className={classes.tabs}
+          className={classes.tabPannel}
         >
-          {userLists ? userLists?.map(({ title, _id }, index) => (
-            <Tab
-              label={title}
-              id={`simple-tab-${index}`}
-              key={_id}
-            />
-          ))
-            :
-            <Tab label='Create A List' />
-          }
-        </Tabs>
-        <TabPanel index={value} value={value} className={classes.tabPannel}>
-          
           <Grid className={classes.listTitle}>
-          <Typography component='h1' variant='h6'>
-            {value !== null ? userLists[value]?.title : 'Need a List, Make a List'}
-          </Typography>
-          <RemoveIcon className={classes.remove}/>
+            <Typography component='h1' variant='h6'>
+              {value !== null ? userLists[value]?.title : 'Need a List, Make a List'}
+            </Typography>
+            {value !== null ?
+              <RemoveIcon className={classes.remove} list={userLists[value]}/>
+              : null
+            }
           </Grid>
-          
+
           <ListItems items={userLists[value]} />
           <div className={classes.absolute}>
             {visible && <ItemForm
