@@ -12,6 +12,13 @@ import { Input } from '../../components/Constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    margin: theme.spacing(1),
+    height: 50,
+  //   '& .MuiTextField-root': {
+  //     margin: theme.spacing(0),
+  //     // width: 300,
+  //     // width: 200,
+  //   },
   },
   container: {
     display: 'flex',
