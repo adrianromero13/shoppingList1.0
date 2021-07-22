@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: theme.spacing(3),
+    bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
   tabs: {
@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
   tabPannel: {
-    maxHeight: '75%',
+    maxHeight: '80%',
     width: '100%',
     // overflowY: 'hidden',
     overflow: 'auto',
