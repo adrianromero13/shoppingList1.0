@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# Full MERN Stack Application - Make-A-List
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+A simple Todo Application with a straight forward design aimed at an audience that seeks a platform to make a **list**, and _nothing else_. 
+The Make-A-List application has full CRUD functionality, which lets the user create and delete lists. It lets the user update the lists by letting them create, update, and delete items in the list, and the list itself. I created this application to test my knowledge of the mechanics of react-hooks, react-hooks-forms, and the component library Material-ui-react.
 
-In the project directory, you can run:
+## Table of Contents
+* [Description](#description)
+* [Installation-and-Usage](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Contributing](#contributing)
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> Prerequisites: 
+  >> Node.js version (^12.13.1)
+  >> npm version (^6.12.1)
+  >> MonogoDb for database
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+> Installation: 
+  >> Clone git repository
+  >> Open in code editor
+  >> Run command: npm i && npm start
+  >> Create config.js file and add "secret" text-value pair to run jwt-services
 
-### `npm test`
+> Usage: 
+  >> Node.js runs concurrently with MongoDB,
+  >> Application opens in default browser
+  >> Click user icon to Sign Up and start
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage
 
-### `npm run build`
+Navigate through the application using the **App Bar**.
+On the top right there is a ***user*** icon, which if not signed in, will let you choose 
+to _Sign Up_ or _Sign In_. 
+If you are already signed up, use the sign in menu item to navigate you to the **Sign In** form,
+otherwise, click the _Sign Up_ menu item to create an account.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Create A List**
+After signing in, there will be a ***Menu Button*** on the left of the **App Bar**.
+Clicking it will open a menu item listed as _Create a list_. Clicking this will open a Modal with a
+a form to assign a title to the new list. Clicking the button on the form will submit and create
+the new list.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Create List Items**
+After creating the list, a tab will render with the title of the list as its text.
+Clicking the tab will activate the rendering of the list under or to the right of the screen; 
+depending on the width of the viewport.
+An ***Add Button*** will appear on the bottom right. If clicked, a small form will appear.
+After adding the text of your list item, click the _checkmark_ and the list item will appear 
+below your list title.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Updating Items and Lists**
+A list item can be marked as _completed_ by hovering over the item, and clicking its respective,
+***checkmark***. Doing so will update your list with the item _crossed out_ to show its completion.
+The item can be marked as not complete by clicking the _checkmark_ of a completed list item.
+The ***Trash*** icon will remove the item from the list completely.
+When A list is active (meaning the list items and title can be seen in the screen),
+To the right of the title of the list will be a ***-*** (_remove_) icon.
+Clicking the _remove_ icon will open a modal with the list title and the number of list items in the list.
+Clicking the designated ***Delete*** button on the form will erase the list and its corresponding list items.
 
-### `npm run eject`
+## License
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[GNU General Public License v3.0](./LICENSE.txt)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributing
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
