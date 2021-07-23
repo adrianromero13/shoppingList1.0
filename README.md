@@ -39,13 +39,13 @@ _Sign Up_ or _Sign In_.<br/>
 If you are already signed up, use the sign in menu item to navigate you to the **Sign In** form,<br/>
 otherwise, click the _Sign Up_ menu item to create an account.
 
-**Create A List**
+**Create A List**  <br/>
 After signing in, there will be a ***Menu Button*** on the left of the **App Bar**.<br/>
 Clicking it will open a menu item listed as _Create a list_.<br/> Clicking this will open a Modal with a
 a form to assign a title to the new list. Clicking the button on the form will submit and create
 the new list.
 
-**Create List Items**
+**Create List Items**  <br/>
 After creating the list, a tab will render with the title of the list as its text.<br/>
 Clicking the tab will activate the rendering of the list under or to the right of the screen; 
 depending on the width of the viewport.<br/>
@@ -53,7 +53,7 @@ An ***Add Button*** will appear on the bottom right. If clicked, a small form wi
 After adding the text of your list item, click the _checkmark_ and the list item will appear 
 below your list title.
 
-**Updating Items and Lists**
+**Updating Items and Lists** <br />
 A list item can be marked as _completed_ by hovering over the item,<br/> and clicking its respective
 ***checkmark***.<br/> Doing so will update your list with the item _crossed out_ to show its completion.<br/>
 The item can be marked as not complete by clicking the _checkmark_ of a completed list item.<br/>
