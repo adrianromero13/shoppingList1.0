@@ -2,7 +2,8 @@
   "name": "shoppinglist-react",
   "version": "1.0.0",
   "engines": {
-    "node": "12.13.1"
+    "node": "12.13.1",
+    "npm": "6.12.1"
   },
   "description": "simple, interactive shopping list",
   "main": "index.js",
