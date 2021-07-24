@@ -36,4 +36,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shoppinglis-rea
     useFindAndModify: false,
   });
 
+mongoose.connected.on('connected', () => {
+  console.log('Mongoose is connected =]');
+});
+
 app.listen(PORT);
