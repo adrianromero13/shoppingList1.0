@@ -25,4 +25,5 @@ yarn-error.log*
 
 
 # security
-config.js
+# config.js
+.env
