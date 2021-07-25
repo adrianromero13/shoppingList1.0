@@ -1,7 +1,9 @@
 const express = require('express');
+// const { connect } = require('mongoose');
 const mongoose = require('mongoose');
+// const { success, error } = require('consola');
 const routes = require('./routes');
-const { MONGODB, PORT } = require('./config');
+const { MONGODB_URI, PORT } = require('./config');
 
 // const PORT = process.env.PORT || 4001;
 
@@ -23,14 +25,15 @@ if (process.env.NODE_ENV === 'production') {
 //   "client": "cd client && npm run start",
 //   "install": "cd client && npm install",
 //   "build": "cd client && npm run build",
-//   "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+//   "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install
+// --prefix client && npm run build --prefix client"
 // },
 
 app.use(routes);
 require('./services/passport');
 // Connect database
 // mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shoppinglis-react',
-mongoose.connect(MONGODB,
+mongoose.connect(MONGODB_URI,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -38,8 +41,31 @@ mongoose.connect(MONGODB,
     useFindAndModify: false,
   });
 
-mongoose.connected.on('connected', () => {
-  console.log('Mongoose is connected =]');
-});
+app.listen(PORT, () => console.log(`connected on port: ${PORT}`));
 
-app.listen(PORT);
+// const startApp = async () => {
+//   // create db connection
+//   try {
+//     await connect(MONGODB, {
+//       useUnifiedTopology: true,
+//       useNewUrlParser: true,
+//       useFindAndModify: false,
+//       useCreateIndex: true,
+//     });
+//     success({
+//       message: `Successfully connected with the Database \n${MONGODB}`,
+//       badge: true,
+//     });
+//     // start listening for server on port
+//     app.listen(PORT, () => success({
+//       message: `Server started on PORT ${PORT}`,
+//       badge: true,
+//     }));
+//   } catch (e) {
+//     error({
+//       message: `Unable to connect with the Database \n${e}`,
+//       badge: true,
+//     });
+//   }
+// };
+// startApp();

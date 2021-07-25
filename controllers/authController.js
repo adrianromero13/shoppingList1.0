@@ -1,14 +1,15 @@
 const { isEmail, isLength } = require('validator');
 const jwt = require('jwt-simple');
 const { User } = require('../models');
-const { secret } = require('../config');
+const { SECRET } = require('../config');
+// const { secret } = require('../config');
 
 // function to create token for user auth
 function tokenForUser(user) {
   // create timestamp
   const timeStamp = new Date().getTime();
   // add timestamp and secret to token
-  return jwt.encode({ sub: user._id, iat: timeStamp }, process.env.SECRET || secret);
+  return jwt.encode({ sub: user._id, iat: timeStamp }, SECRET);
 }
 
 module.exports = {
