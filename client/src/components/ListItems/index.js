@@ -30,7 +30,7 @@ export default function ListItems({ items }) {
   const [hoveringItem, setHoveringItem] = useState(null);
 
   const activateHover = (index) => {
-    if(index >= 0) {
+    if (index >= 0) {
       setHoveringItem(index)
     } else setHoveringItem(null)
   }
@@ -46,18 +46,17 @@ export default function ListItems({ items }) {
             <ListItem
               key={_id}
               button
-              // onClick={() => activateHover(index)}
               onMouseEnter={() => activateHover(index)}
               onMouseLeave={() => deactivateHover()}
               selected={hoveringItem === index}
             >
-              <ListItemText 
-              primary={`${index + 1}: ${text}`}
-              style={{ textDecoration: completed ? 'line-through' : 'none'}}
+              <ListItemText
+                primary={`${index + 1}: ${text}`}
+                style={{ textDecoration: completed ? 'line-through' : 'none' }}
               />
               {hoveringItem === index &&
                 <>
-                  <CompleteButton id={_id} text={text} completed={completed}/>
+                  <CompleteButton id={_id} text={text} completed={completed} />
                   <DeleteItemButton id={_id} deleteById={deleteItemById} />
                 </>
               }

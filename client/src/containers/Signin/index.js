@@ -93,6 +93,6 @@ const Signin = (props) => {
       </form>
     </Grid>
   )
-}
+};
 
 export default Signin;

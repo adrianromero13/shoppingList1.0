@@ -40,7 +40,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Signup = (props) => {
-  // const ref = createRef();
   const classes = useStyles();
   const { register, handleSubmit, control } = useForm();
   const dispatch = useDispatch();
