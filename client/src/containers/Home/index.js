@@ -139,7 +139,6 @@ const Home = () => {
   const classes = useStyles();
   const [value, setValue] = useState(null);
   const [visible, setVisible] = useState(false);
-  // const [deleteModal, setDeleteModal] = useState(false);
   const [windowSize, setWindowSize] = useState(null);
 
   const userLists = useSelector(state => state.lists.getLists);
@@ -192,7 +191,6 @@ const Home = () => {
           }
         </Tabs>
       </TabsOrientation>
-
       <TabPanel
         index={value}
         value={value}
@@ -207,7 +205,6 @@ const Home = () => {
             : null
           }
         </Grid>
-
         <ListItems items={userLists[value]} />
         <div className={classes.absolute}>
           {visible && <ItemForm

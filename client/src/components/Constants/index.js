@@ -24,7 +24,6 @@ export function Input({
       render={({ field: { onChange, value, ref }, fieldState: { error } }) => (
         <TextField
           inputRef={inputRef}
-          // {...rest}
           label={label}
           type={type}
           variant='filled'

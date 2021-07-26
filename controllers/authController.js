@@ -2,7 +2,6 @@ const { isEmail, isLength } = require('validator');
 const jwt = require('jwt-simple');
 const { User } = require('../models');
 const { SECRET } = require('../config');
-// const { secret } = require('../config');
 
 // function to create token for user auth
 function tokenForUser(user) {

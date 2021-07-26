@@ -14,11 +14,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     margin: theme.spacing(1),
     height: 50,
-  //   '& .MuiTextField-root': {
-  //     margin: theme.spacing(0),
-  //     // width: 300,
-  //     // width: 200,
-  //   },
   },
   container: {
     display: 'flex',
@@ -44,10 +39,14 @@ export default function ItemForm(props) {
       dispatch({ type: CREATE_USER_TODO_ERROR, payload: e });
       alert(`Error: ${e}`)
     }
-  }
+  };
 
   return (
-    <Grow in={props.visible} style={{ transformOrigin: '0 0 0' }} {...(props.visible ? { timeout: 500 } : {})}>
+    <Grow
+      in={props.visible}
+      style={{ transformOrigin: '0 0 0' }}
+      {...(props.visible ? { timeout: 500 }
+        : {})}>
       <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
         <Input
           inputRef={register('text', { required: true })}

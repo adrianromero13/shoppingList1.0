@@ -17,17 +17,16 @@ import { Input } from '../../components/Constants';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    // position: 'relative',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     '& .MuiTextField-root': {
-      margin: theme.spacing(2),
+      margin: theme.spacing(1),
       width: 300,
     },
     '& .MuiButtonBase-root': {
-      margin: theme.spacing(2),
+      margin: theme.spacing(1),
       width: 300,
       height: 50,
     },
@@ -37,6 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   modal: {
     position: 'absolute',
+    textAlign: 'center',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -63,7 +63,7 @@ const CreateListModal = (props) => {
       dispatch({ type: CREATE_USER_LIST_ERROR, payload: e })
       alert('error', e);
     }
-  }
+  };
 
 
   return (
@@ -76,7 +76,7 @@ const CreateListModal = (props) => {
         >
           <Grid className={classes.modal}>
             <Typography component='h1' variant='h6'>Create A New list</Typography>
-            <form onSubmit={handleSubmit(onSubmit)} >
+            <form onSubmit={handleSubmit(onSubmit)} className={classes.root}>
               <Input
                 inputRef={register('title', { required: true })}
                 name='title'
@@ -98,6 +98,6 @@ const CreateListModal = (props) => {
       }
     </>
   )
-}
+};
 
 export default CreateListModal;

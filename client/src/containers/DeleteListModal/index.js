@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { Button, Modal } from '@material-ui/core';
+import { Button, Modal, Typography } from '@material-ui/core';
 
 import { deleteListById } from '../../actions/todos';
 
 const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
+  textAlign: 'center',
+    width: '70%',    
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -32,7 +34,7 @@ export default function DeleteListModal(props) {
 
   const handleDelete = async id => {
     await dispatch(deleteListById(id));
-    handleCloseModal();
+    await handleCloseModal();
   }
 
   const handleOpenModal = () => {
@@ -45,7 +47,7 @@ export default function DeleteListModal(props) {
 
   const modalContent = (
     <div className={classes.paper} key={_id}>
-      <h2>Delete List: {title}</h2>
+      <Typography component='h1' variant='h6'>Delete List: {title}</Typography>
       <p>List has {todos?.length} items</p>
       <p>Are you sure you want to delete?</p>
       <Button
@@ -54,7 +56,6 @@ export default function DeleteListModal(props) {
         fullWidth
         size='small'
         onClick={() => handleDelete(_id)}
-        // onClick={() => dispatch(deleteListById(_id)) && handleCloseModal}
       >Delete {title}</Button>
     </div>
   );
